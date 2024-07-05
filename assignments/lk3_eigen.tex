@@ -1,0 +1,868 @@
+\documentclass{article}
+\usepackage{blindtext}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+
+\title{LK3 - Metode Numerik}
+\author{YOGA RADITYA NALA\\
+235150201111020}
+\date{July 4, 2024}
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\counterwithin*{equation}{subsubsection}
+\renewcommand{\partname}{Soal}
+
+\begin{document}
+
+\maketitle
+
+\part{Nilai Eigen dan Vektor Eigen}
+Hitunglah nilai eigen value dan eigen vector dari matriks A berikut ini baik secara analytical maupun numeric.
+
+$$
+A=
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+$$
+
+\section{Analytical Method}
+Pendekatan pertama yang akan kita kerjakan adalah menggunakan metode analytical, yaitu sebagai berikut\\
+
+\subsection{Eigen Values}
+Untuk bisa menghitung nilai eigen value secara analytical dari matriks tersebut, kita bisa menggunakan rumus $det(A - \lambda I) = 0$. Pertama, kita bisa mengurangkan matriks tersebut dengan matriks identitas yang dikalikan dengan lambda.
+
+\begin{align*}
+det \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- \lambda
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+\right)
+&= 0
+\\\\
+det \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+-
+\begin{bmatrix}
+\lambda & 0 & 0\\
+0 & \lambda & 0\\
+0 & 0 & \lambda
+\end{bmatrix}
+\right)
+&= 0
+\\\\
+\begin{vmatrix}
+4 - \lambda & 1 & 1\\
+2 & 3 - \lambda & 1\\
+1 & 1 & 2 - \lambda
+\end{vmatrix}
+&= 0
+\end{align*}
+
+Setelah mengurangkan matriks tersebut dengan matriks identitas yang dikalikan dengan lambda, kita bisa langsung menghitung determinan, sehingga bisa mendapatkan persamaan yang bisa digunakan untuk mencari eigen values. Salah satu cara untuk menghitung determinan tersebut adalah dengan metode sarrus, sehingga didapatkan hasil berikut.
+
+$$
+\begin{vmatrix}
+    4-\lambda & 1 & 1\\
+    2 & 3-\lambda & 1\\
+    1 & 1 & 2 -\lambda
+\end{vmatrix}
+\begin{matrix}
+    4-\lambda & 1\\
+    2 & 3 - \lambda\\
+    1 & 1
+\end{matrix}
+$$
+
+\begin{align*}
+    (4-\lambda)(3-\lambda)(2-\lambda)+1+2-(3-\lambda)-(4-\lambda)-(2-\lambda)(2) &= 0\\
+    (4-\lambda)(3-\lambda)(2-\lambda)+3-(3-\lambda)-(4-\lambda)-(4-2\lambda) &= 0\\
+    (4-\lambda)(3-\lambda)(2-\lambda)+3-3+\lambda-4+\lambda-4+2\lambda &= 0\\
+    (4-\lambda)(3-\lambda)(2-\lambda)+4\lambda - 8&= 0\\
+    (\lambda^2 -7\lambda + 12)(2-\lambda) + 4\lambda - 8&= 0\\
+    -\lambda^3+7\lambda^2-12\lambda+2\lambda^2-14\lambda+24+4\lambda-8&= 0\\
+    -\lambda^3+9\lambda^2-22\lambda+16&= 0
+\end{align*}
+
+Untuk mencari solusi dari persamaan tersebut, kita bisa menggunakan synthetic division atau pembagian polinomial. Hasilnya, persamaan baru yang diperoleh sebagai berikut.
+
+\begin{align*}
+    (\lambda-2)(-\lambda^2+7\lambda-8) &= 0
+\end{align*}
+
+Dari persamaan baru tersebut, bisa mengetahui bahwa salah satu nilai $\lambda$ adalah $2$. Selanjutnya, kita perlu mencari nilai lambda yang lain menggunakan rumus berikut.
+
+$$
+\lambda = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+Kita bisa langsung subtitusikan persamaan $-\lambda^2 +7\lambda - 8$ pada rumus tersebut, sehingga didapatkan sebagai berikut.
+
+\begin{align*}
+    \lambda = \frac{-7 \pm \sqrt{7^2 - 4(-1)(-8)}}{2(-1)}\\
+    \lambda = \frac{-7 \pm \sqrt{49 - 32}}{-2}\\
+    \lambda = \frac{7 \pm \sqrt{17}}{2}
+\end{align*}
+
+Dari hasil tersebut, kita bisa menyimpulkan nilai eigen (eigen values) sebagai berikut.
+
+\begin{align*}
+    \lambda = 2; \lambda = \frac{7 + \sqrt{17}}{2} \approx 5.561552812808831; \lambda = \frac{7 - \sqrt{17}}{2} \approx 1.4384471871911697
+\end{align*}
+
+\subsection{Eigen Vector}
+Setelah memiliki nilai-nilai eigen dari perhitungan sebelumnya, kita bisa mencari eigen vector dari masing-masing nilai eigen tersebut. Caranya ialah dengan mensubstitusikan nilai lambda yang kita temukan pada rumus/persamaan berikut.
+
+\begin{align*}
+    (A-\lambda I)e &= 0
+\end{align*}
+
+\subsubsection{$\lambda = 2$}
+Pertama, kita bisa mencari eigen vector untuk $\lambda = 2$, yaitu sebagai berikut.
+
+\begin{align*}
+    \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- \lambda
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+    \right)
+    e = 0\\
+        \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- 2
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0\\
+            \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+-
+\begin{bmatrix}
+2 & 0 & 0\\
+0 & 2 & 0\\
+0 & 0 & 2
+\end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0\\
+\begin{bmatrix}
+2 & 1 & 1\\
+2 & 1 & 1\\
+1 & 1 & 0
+\end{bmatrix}
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0
+\end{align*}
+
+Dari hasil operasi matriks tersebut, kita bisa mendapatkan persamaan sebagai berikut.
+
+\begin{align}
+    x_1 + x_2 &= 0 \\
+    2x_1 + x_2 + x_3 &= 0
+\end{align}
+
+Apabila persamaan pertama tersebut kita uraikan, kita bisa mendapatkan hasil berikut.
+
+\begin{align*}
+ x_1 + x_2 &= 0 \\
+    x_1 = -x_2
+\end{align*}
+
+Dengan mendapatkan nilai $x_1$, kita bisa mencari untuk nilai $x_3$ dengan cara substitusikan $x_1$ tersebut ke persamaan kedua.
+
+\begin{align*}
+2x_1 + x_2 + x_3 &= 0\\
+    2(-x_2)+x_2+x_3 &= 0\\
+    -2x_2+x_2+x_3 &= 0\\
+    -x_2 + x_3 &= 0\\
+    x_3 &= x_2
+\end{align*}
+
+Dari perhitungan tersebut, kita bisa simpulkan bahwa nilai $x_3$ selalu sama dengan $x_2$, sehingga nilai $x_1$ merupakan hasil kali negatif dengan $x_3$ atau $x_2$. Oleh karena itu, kita bisa mendapatkan eigen vector sebagai berikut.
+
+$$
+\begin{bmatrix}
+    -1\\
+    1\\
+    1
+\end{bmatrix}
+,
+\begin{bmatrix}
+    -2\\
+    2\\
+    2
+\end{bmatrix}
+,
+\begin{bmatrix}
+    -3\\
+    3\\
+    3
+\end{bmatrix},
+\cdots
+,
+\begin{bmatrix}
+    -x\\
+    x\\
+    x
+\end{bmatrix}
+$$
+
+Dikarenakan nilai $x$ bisa berapapun, maka kita bisa cukup ambil eigen vector dengan nilai $x=1$.
+
+\subsubsection{$\lambda = \frac{7 + \sqrt{17}}{2} \approx 5.561552812808831$}
+Kedua, kita bisa mencari eigen vector untuk lambda tersebut dengan cara berikut. Untuk memudahkan perhitungan, kita hanya akan menggunakan dua angka di belakang titik desimal sebagai nilai aproksimasi.
+
+\begin{align*}
+    \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- \lambda
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+    \right)
+    e = 0\\
+        \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- 5,56
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0\\
+            \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+-
+\begin{bmatrix}
+5,56 & 0 & 0\\
+0 & 5,56 & 0\\
+0 & 0 & 5,56
+\end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0\\
+\begin{bmatrix}
+-1,56 & 1 & 1\\
+2 & -2,56 & 1\\
+1 & 1 & -3,56
+\end{bmatrix}
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0
+\end{align*}
+
+\setcounter{equation}{0}
+
+Dari hasil tersebut, kita bisa buat persamaan sebagai berikut.
+
+\begin{align}
+    -1,56x_1 + x_2 + x_3 &= 0\\
+    2x_1 -2,56x_2 + x_3 &= 0\\
+    x_1 + x_2 -3,56x_3 &= 0
+\end{align}
+
+Dengan permisalan bahwa nilai $x_3 = 1$, maka kita bisa dapatkan persamaan berikut.
+\begin{align*}
+-1,56x_1 + x_2 + x_3 &= 0\\
+    -1,56x_1 + x_2 + 1 &= 0\\
+    x_2 &= 1,56x_1 - 1
+\end{align*}
+
+Dengan kita memiliki nilai dari $x_2$, maka kita bisa memperoleh nilai untuk $x_1$ dengan cara mensubstitusi nilai $x_2$ pada persamaan kedua.
+
+\begin{align*}
+    2x_1 -2,56x_2 + x_3 &= 0\\
+    2x_1 -2,56(1,56x_1 - 1) + 1 &= 0\\
+    2x_1 -3,99x_1 + 2,56 + 1 &= 0\\
+    -1,99x_1 + 3,56&= 0\\
+    -1,99x_1 &= -3,56\\
+    x_1 &= \frac{3,56}{1,99}\\
+    x_1 &= 1,78
+\end{align*}
+
+Setelah mendapatkan nilai untuk $x_1$, kita bisa mencari nilai $x_2$ dengan cara mensubstitusikan nilai dari $x_1$ ke persamaan ketiga.
+\begin{align*}
+    x_1 + x_2 -3,56x_3 &= 0\\
+    1,78 + x_2 -3,56(1) &= 0\\
+    x_2 &= 3,56-1,78\\
+    x_2 &= 1,78
+\end{align*}
+
+Dari hasl perhitungan tersebut, dapat kita simpulkan bahwa nilai $x_1$ dan $x_2$ memiliki selisih kecil (atau mungkin bernilai sama) dan bergantung pada nilai dari $x_3$. Oleh karena itu, didapatkan nilai eigen vector sebagai berikut.
+
+$$
+\begin{bmatrix}
+    1,78\\
+    1,78\\
+    1
+\end{bmatrix}
+,
+\begin{bmatrix}
+    3,56\\
+    3,56\\
+    2
+\end{bmatrix}
+,
+\begin{bmatrix}
+    5,34\\
+    5,34\\
+    3
+\end{bmatrix}
+,
+\cdots
+,
+\begin{bmatrix}
+    1,78(x)\\
+    1,78(x)\\
+    x
+\end{bmatrix}
+$$
+
+Dikarenakan nilai $x$ bisa berapapun, maka kita bisa cukup ambil eigen vector dengan nilai $x=1$.
+
+\subsubsection{$\lambda \frac{7-\sqrt{17}}{2} \approx 1.4384471871911697$}
+Ketiga, kita bisa mencari vektor eigen untuk nilai eigen $1.4384471871911697$. Sama seperti sebelumnya, kita akan menggunakan dua angka di belakang titik desimal sebagai nilai aproksimasi untuk mempermudah perhitungan.
+
+\begin{align*}
+    \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- \lambda
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+    \right)
+    e = 0\\
+        \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+- 1,43
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0\\
+            \left(
+\begin{bmatrix}
+4 & 1 & 1\\
+2 & 3 & 1\\
+1 & 1 & 2
+\end{bmatrix}
+-
+\begin{bmatrix}
+1,43 & 0 & 0\\
+0 & 1,43 & 0\\
+0 & 0 & 1,43
+\end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0\\
+\begin{bmatrix}
+2,57 & 1 & 1\\
+2 & 1,57 & 1\\
+1 & 1 & 0,57
+\end{bmatrix}
+    \begin{bmatrix}
+        x_1\\x_2\\x_3
+    \end{bmatrix} = 0
+\end{align*}
+
+\setcounter{equation}{0}
+
+Dari hasil tersebut, kita bisa buat persamaan sebagai berikut.
+
+\begin{align}
+    2,57x_1 + x_2 + x_3 &= 0\\
+    2x_1 + 1,57x_2 + x_3 &= 0\\
+    x_1 + x_2 +0,57x_3 &= 0
+\end{align}
+
+Dengan permisalan $x_3 = 1$, kita bisa mendapatkan persamaan berikut.
+\begin{align*}
+    2,57x_1 + x_2 + x_3 &= 0\\
+    2,57x_1 + x_2 + 1 &= 0\\
+    x_2 &= - 2,57x_1 - 1 0\\    
+\end{align*}
+
+Setelah mendapatkan persamaan $x_2$, kita bisa mencari $x_1$ dengan mensubstitusikan persamaan $x_2$ ke persamaan kedua.
+
+\begin{align*}
+    2x_1 + 1,57x_2 + x_3 &= 0\\
+    2x_1 + 1,57(- 2,57x_1 - 1 0) + 1 &= 0\\
+    2x_1  - 4,03x_1 - 1,57 + 1 &= 0\\
+    -2,03x_1 - 0,57 &= 0\\
+    -2,03x_1 &= 0,57\\
+    x_1 &= -\frac{2,03}{0,57}\\
+    x_1 &= -0,28
+\end{align*}
+
+Kemudian, kita bisa substitusikan nilai $x_1$ ke persamaan ketiga untuk mendapatkan nilai dari $x_2$.
+
+\begin{align*}
+    x_1 + x_2 +0,57x_3 &= 0\\
+    -0,28 + x_2 + 0,57(1) &= 0\\
+    x_2 &= -0,57 + 0,28\\
+    x_2 &= -0,29
+\end{align*}
+
+Dari hasl perhitungan tersebut, dapat kita simpulkan bahwa nilai $x_1$ dan $x_2$ memiliki selisih kecil (kemungkinan besar bernilai sama apabila ketelitian ditingkatkan) dan bergantung pada nilai dari $x_3$. Oleh karena itu, didapatkan nilai eigen vector sebagai berikut.
+
+$$
+\begin{bmatrix}
+    -0,28\\
+    -0,29\\
+    1
+\end{bmatrix}
+,
+\begin{bmatrix}
+    -0,56\\
+    -0,58\\
+    2
+\end{bmatrix}
+,
+\begin{bmatrix}
+    -0,84\\
+    -0,87\\
+    3
+\end{bmatrix}
+,
+\cdots
+,
+\begin{bmatrix}
+    -0,28(x)\\
+    -0,29(x)\\
+    x
+\end{bmatrix}
+$$
+
+Dikarenakan nilai $x$ bisa berapapun, maka kita bisa cukup ambil eigen vector dengan nilai $x=1$.
+
+\section{Numerical Method}
+Pengerjaan dengan cara numerical method bisa dilakukan dengan menggunakan Power Method. Caranya ialah sebagai berikut.
+
+\begin{enumerate}
+    \item Tentukan nilai $x_n$ dengan nilai random untuk $n = 0$
+    \item Hitung $x_{n+1} = Ax_n$
+    \item Ulangi langkah 2 hingga $x_{n+1} - x_n < \epsilon$
+\end{enumerate}
+
+Berdasarkan hal tersebut, kita bisa menentukan $x_0$ secara random. Oleh karena itu, kita bisa gunakan $ \begin{bmatrix} 1  \\ 1  \\ 1  \end{bmatrix} $ sebagai matriks awal. Untuk nilai toleransi, kita hanya akan menghitung hingga tiga angka di belakang titik desimal.
+
+\subsection{Eigen Vector}
+Pertama, kita bisa melakukan iterasi menggunakan vektor random yang sudah kita tentukan sebelumnya. Kemudian, kita bisa melakukan iterasi hingga nilai toleransi tercapai, sehingga didapatkan hitungan sebagai berikut.
+
+\begin{align}
+    \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        1\\
+        1\\
+        1
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        6\\
+        6\\
+        4
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,5\\
+        1,5\\
+        1
+    \end{bmatrix}\\
+        \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        6\\
+        6\\
+        4
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        34\\
+        34\\
+        20
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,7\\
+        1,7\\
+        1
+    \end{bmatrix}\\
+        \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        34\\
+        34\\
+        20
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        190\\
+        190\\
+        108
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,759\\
+        1,759\\
+        1
+    \end{bmatrix}\\
+        \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        190\\
+        190\\
+        108
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        1058\\
+        1058\\
+        596
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,775\\
+        1,775\\
+        1
+    \end{bmatrix}\\
+        \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        1058\\
+        1058\\
+        596
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        5886\\
+        5886\\
+        3308
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,779\\
+        1,779\\
+        1
+    \end{bmatrix}\\
+        \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        5886\\
+        5886\\
+        3308
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        32738\\
+        32738\\
+        18388
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,780\\
+        1,780\\
+        1
+    \end{bmatrix}\\
+        \begin{bmatrix}
+        4 & 1 & 1\\
+        2 & 3 & 1\\
+        1 & 1 & 2\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        32738\\
+        32738\\
+        18388
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        182078\\
+        182078\\
+        102252
+    \end{bmatrix}
+    \approx
+    \begin{bmatrix}
+        1,780\\
+        1,780\\
+        1
+    \end{bmatrix}
+\end{align}
+
+Dari hasil tersebut, dapat dilihat bahwa antara iterasi ke-7 dengan interasi ke-6 sudah tidak tampak perbedaan pada eigen vector, yaitu sama-sama berada pada $1,780$. Oleh karena itu, kita bisa simpulkan bahwa vektor tersebut ialah vektor eigen.
+
+$$
+e = 
+    \begin{bmatrix}
+        1,780\\
+        1,780\\
+        1
+    \end{bmatrix}
+$$
+
+\subsection{Eigen Value}
+Untuk mencari eigen value dari hasil Power Method, kita bisa gunakan rumus berikut.
+
+\begin{align*}
+    B &= X_i^TX_i\\
+    \lambda &= B^{-1}x_i^TX_{i+n}
+\end{align*}
+
+Sementara itu, berdasarkan perhitungan sebelumnya, kita bisa mendapatkan bahwa hasil berikut dengan $n$ mewakili iterasi.
+
+$$
+x_6 = \begin{bmatrix}
+        32738\\
+        32738\\
+        18388
+    \end{bmatrix}
+    ,
+x_7 = \begin{bmatrix}
+        182078\\
+        182078\\
+        102252
+    \end{bmatrix}
+$$
+
+Oleh karena itu, kita bisa mencari eigen value dengan mencari nilai dari $B$ terlebih dahulu.
+
+\begin{align*}
+    B &= x_6^T + x_6\\
+    &=
+    \begin{bmatrix}
+        32738 & 32738 & 18388
+    \end{bmatrix}
+    \begin{bmatrix}
+        32738\\
+        32738\\
+        18388
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        1071776644 + 1071776644 + 338118544
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        2481671832
+    \end{bmatrix}
+\end{align*}
+
+Setelah mendapatkan nilai dari $B$, kita bisa mencari nilai eigen dengan melakukan substitusi nilai $B$ tersebut ke persamaan awal.
+
+\begin{align*}
+    \lambda &= B^{-1}x_6^TX_{7}\\
+     &= 
+    \begin{bmatrix}
+        2481671832
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+        32738 & 32738 & 18388
+    \end{bmatrix}
+    \begin{bmatrix}
+        182078\\
+        182078\\
+        102252
+    \end{bmatrix}\\
+    &= 
+    \begin{bmatrix}
+        2481671832
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+        5960869564 + 5960869564 + 1880209776
+    \end{bmatrix}\\
+    &= 
+    \begin{bmatrix}
+        2481671832
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+        13801948904
+    \end{bmatrix}\\
+    &= 5.561552791158892 \approx 5.61
+\end{align*}
+
+Dari hasil tersebut, dapat dilihat bahwa nilai eigen 5.61 akan menghasilkan vektor eigen $\begin{bmatrix}
+    1,780\\1,780\\1
+\end{bmatrix}$. Hal tersebut menunjukkan hasil yang sama apabila kita melihat pada metode analytic yang kita kerjakan sebelumnya, hanya saja Power Method ini tidak mencari seluruh nilai/vektor eigen, melainkan nilai/vektor eigen yang paling dominan.
+
+\part{Singular Value}
+Hitunglah singular value dari matriks A berikut ini.
+$$
+A =
+\begin{bmatrix}
+    2 & 1\\
+    1 & 2\\
+    2 & 2
+\end{bmatrix}
+$$
+
+Untuk mencari nilai singular value dari matriks tersebut, kita dapat melakukannya dengan menggunakan rumus berikut.
+
+\begin{align*}
+    A^TA \xrightarrow{} \lambda\\
+    \sigma = \sqrt{\lambda}
+\end{align*}
+
+Pertama, untuk mencari nilai eigen, kita perlu mencari $A^TA$ terlebih dahulu.
+
+\begin{align*}
+A^TA &=
+    \begin{bmatrix}
+        2 & 1 & 2 \\
+        1 & 2 & 2
+    \end{bmatrix}
+    \begin{bmatrix}
+        2 & 1\\
+        1 & 2\\
+        2 & 2
+    \end{bmatrix}\\
+    &= 
+    \begin{bmatrix}
+        9 & 8\\
+        8 & 9
+    \end{bmatrix}
+\end{align*}
+
+Setelah menemukan $A^TA$, kita bisa lanjut mencari nilai eigen dari matriks tersebut.
+
+\begin{align*}
+    \left|
+    \begin{bmatrix}
+        9 & 8\\
+        8 & 9
+    \end{bmatrix}
+    -
+    \lambda
+    \begin{bmatrix}
+        1 & 0\\
+        0 & 1
+    \end{bmatrix}
+    \right|
+    &= 0\\
+        \left|
+    \begin{bmatrix}
+        9 & 8\\
+        8 & 9
+    \end{bmatrix}
+    -
+    \begin{bmatrix}
+        \lambda & 0\\
+        0 & \lambda
+    \end{bmatrix}
+    \right|
+    &= 0\\
+    \begin{vmatrix}
+        9 - \lambda& 8\\
+        8 & 9-\lambda
+    \end{vmatrix}
+    &= 0\\
+    (9-\lambda)(9-\lambda)-64 &= 0\\
+    \lambda^2-9\lambda-9\lambda+81-64 &= 0\\
+    \lambda^2-18\lambda+17&= 0\\
+    (\lambda-17)(\lambda-1)&= 0\\
+\end{align*}
+
+Dari persamaan yang kita selesaikan tersebut, kita bisa mendapatkan kedua nilai lambda.
+
+\begin{align*}
+    \lambda_1 &= 17\\
+    \lambda_2 &= 1
+\end{align*}
+
+Setelah mendapatkan bahwa nilai eigen adalah 17 dan 1, kita bisa menentukan singular value dari matriks tersebut dengan mencari nilai akar dari nilai eigen tersebut.
+
+\begin{align*}
+    \sigma &= \sqrt{\lambda}\\
+    \sigma_1&= \sqrt{17} \approx 4,123105626\\
+    \sigma_2&= \sqrt{1} \approx 1
+\end{align*}
+
+\end{document}

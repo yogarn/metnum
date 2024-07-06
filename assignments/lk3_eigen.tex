@@ -403,7 +403,7 @@ Ketiga, kita bisa mencari vektor eigen untuk nilai eigen $1.4384471871911697$. S
 2 & 3 & 1\\
 1 & 1 & 2
 \end{bmatrix}
-- 1,43
+- 1,44
 \begin{bmatrix}
 1 & 0 & 0\\
 0 & 1 & 0\\
@@ -421,18 +421,18 @@ Ketiga, kita bisa mencari vektor eigen untuk nilai eigen $1.4384471871911697$. S
 \end{bmatrix}
 -
 \begin{bmatrix}
-1,43 & 0 & 0\\
-0 & 1,43 & 0\\
-0 & 0 & 1,43
+1,44 & 0 & 0\\
+0 & 1,44 & 0\\
+0 & 0 & 1,44
 \end{bmatrix}
     \right)
     \begin{bmatrix}
         x_1\\x_2\\x_3
     \end{bmatrix} = 0\\
 \begin{bmatrix}
-2,57 & 1 & 1\\
-2 & 1,57 & 1\\
-1 & 1 & 0,57
+2,56 & 1 & 1\\
+2 & 1,56 & 1\\
+1 & 1 & 0,56
 \end{bmatrix}
     \begin{bmatrix}
         x_1\\x_2\\x_3
@@ -444,37 +444,37 @@ Ketiga, kita bisa mencari vektor eigen untuk nilai eigen $1.4384471871911697$. S
 Dari hasil tersebut, kita bisa buat persamaan sebagai berikut.
 
 \begin{align}
-    2,57x_1 + x_2 + x_3 &= 0\\
-    2x_1 + 1,57x_2 + x_3 &= 0\\
-    x_1 + x_2 +0,57x_3 &= 0
+    2,56x_1 + x_2 + x_3 &= 0\\
+    2x_1 + 1,56x_2 + x_3 &= 0\\
+    x_1 + x_2 +0,56x_3 &= 0
 \end{align}
 
 Dengan permisalan $x_3 = 1$, kita bisa mendapatkan persamaan berikut.
 \begin{align*}
-    2,57x_1 + x_2 + x_3 &= 0\\
-    2,57x_1 + x_2 + 1 &= 0\\
-    x_2 &= - 2,57x_1 - 1 0\\    
+    2,56x_1 + x_2 + x_3 &= 0\\
+    2,56x_1 + x_2 + 1 &= 0\\
+    x_2 &= - 2,56x_1 - 1\\    
 \end{align*}
 
 Setelah mendapatkan persamaan $x_2$, kita bisa mencari $x_1$ dengan mensubstitusikan persamaan $x_2$ ke persamaan kedua.
 
 \begin{align*}
-    2x_1 + 1,57x_2 + x_3 &= 0\\
-    2x_1 + 1,57(- 2,57x_1 - 1 0) + 1 &= 0\\
-    2x_1  - 4,03x_1 - 1,57 + 1 &= 0\\
-    -2,03x_1 - 0,57 &= 0\\
-    -2,03x_1 &= 0,57\\
-    x_1 &= -\frac{2,03}{0,57}\\
+    2x_1 + 1,56x_2 + x_3 &= 0\\
+    2x_1 + 1,56(- 2,56x_1 - 1) + 1 &= 0\\
+    2x_1  - 3,99x_1 - 1,56 + 1 &= 0\\
+    -1,99x_1 - 0,56 &= 0\\
+    -1,99x_1 &= 0,56\\
+    x_1 &= -\frac{0,56}{1,99}\\
     x_1 &= -0,28
 \end{align*}
 
 Kemudian, kita bisa substitusikan nilai $x_1$ ke persamaan ketiga untuk mendapatkan nilai dari $x_2$.
 
 \begin{align*}
-    x_1 + x_2 +0,57x_3 &= 0\\
-    -0,28 + x_2 + 0,57(1) &= 0\\
-    x_2 &= -0,57 + 0,28\\
-    x_2 &= -0,29
+    x_1 + x_2 +0,56x_3 &= 0\\
+    -0,28 + x_2 + 0,56(1) &= 0\\
+    x_2 &= -0,56 + 0,28\\
+    x_2 &= -0,28
 \end{align*}
 
 Dari hasl perhitungan tersebut, dapat kita simpulkan bahwa nilai $x_1$ dan $x_2$ memiliki selisih kecil (kemungkinan besar bernilai sama apabila ketelitian ditingkatkan) dan bergantung pada nilai dari $x_3$. Oleh karena itu, didapatkan nilai eigen vector sebagai berikut.
@@ -482,19 +482,19 @@ Dari hasl perhitungan tersebut, dapat kita simpulkan bahwa nilai $x_1$ dan $x_2$
 $$
 \begin{bmatrix}
     -0,28\\
-    -0,29\\
+    -0,28\\
     1
 \end{bmatrix}
 ,
 \begin{bmatrix}
     -0,56\\
-    -0,58\\
+    -0,56\\
     2
 \end{bmatrix}
 ,
 \begin{bmatrix}
     -0,84\\
-    -0,87\\
+    -0,84\\
     3
 \end{bmatrix}
 ,
@@ -502,7 +502,7 @@ $$
 ,
 \begin{bmatrix}
     -0,28(x)\\
-    -0,29(x)\\
+    -0,28(x)\\
     x
 \end{bmatrix}
 $$

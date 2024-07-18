@@ -1,6 +1,7 @@
 .vscode
 .ipynb_checkpoints
 .idea/
+assignments/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
